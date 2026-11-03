@@ -6,7 +6,7 @@ argument-hint: "<task in your own words>"
 
 # map-rcm
 
-Answer in the user's language (Korean if they write Korean).
+Reply in the user's language: the language of their message, or if the invocation has no words (e.g. just `/map-check`), the language of their earlier messages or global rules; fall back to `$LANG`.
 
 `MS` = `python3 <this skill's directory>/../map/scripts/mapskills.py`. Registry = `<this skill's directory>/../map/registry.json`.
 Refresh the index with `MS scan --json` if `~/.mapskills/index.json` is missing or older than a day, and work only from it.

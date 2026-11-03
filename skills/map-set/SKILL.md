@@ -6,7 +6,7 @@ argument-hint: "[core | <category> | <skill id>...] [--latest]"
 
 # map-set
 
-Install or update skills from the curated registry. Answer in the user's language.
+Install or update skills from the curated registry. Reply in the user's language: the language of their message, or if the invocation has no words (e.g. just `/map-check`), the language of their earlier messages or global rules; fall back to `$LANG`.
 
 `MS` = `python3 <this skill's directory>/../map/scripts/mapskills.py`. Registry = `<this skill's directory>/../map/registry.json`.
 

@@ -6,7 +6,7 @@ argument-hint: "[category]"
 
 # map-check
 
-Audit the user's skills and propose a tidy setup. Answer in the user's language. Read-only until the user approves.
+Audit the user's skills and propose a tidy setup. Reply in the user's language: the language of their message, or if the invocation has no words (e.g. just `/map-check`), the language of their earlier messages or global rules; fall back to `$LANG`. Read-only until the user approves.
 
 `MS` = `python3 <this skill's directory>/../map/scripts/mapskills.py`. Registry = `<this skill's directory>/../map/registry.json`.
 

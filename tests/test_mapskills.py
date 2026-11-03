@@ -146,11 +146,11 @@ class Usage(Base):
         codex = self.home / ".codex/sessions/2026"
         codex.mkdir(parents=True)
         (codex / "r.jsonl").write_text("\n".join(json.dumps(x) for x in [
-            {"type": "response_item", "payload": {"type": "custom_tool_call", "input": "cat ~/.agents/skills/remote-run/SKILL.md"}},
-            {"type": "session_meta", "payload": {"text": "skills/impeccable/SKILL.md skills/remote-run/SKILL.md"}},
+            {"type": "response_item", "payload": {"type": "custom_tool_call", "input": "cat ~/.agents/skills/example-skill/SKILL.md"}},
+            {"type": "session_meta", "payload": {"text": "skills/impeccable/SKILL.md skills/example-skill/SKILL.md"}},
         ]) + "\n")
         counts = json.loads(self.ms("usage"))["counts"]
-        self.assertEqual(counts, {"impeccable": 1, "remote-run": 1})
+        self.assertEqual(counts, {"impeccable": 1, "example-skill": 1})
 
     def test_usage_off_writes_nothing(self):
         self.ms("config", "usage", "off")

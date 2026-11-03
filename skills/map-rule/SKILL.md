@@ -6,7 +6,7 @@ argument-hint: "[en | short | sync | route]"
 
 # map-rule
 
-Propose better global rules; never silently change them. Answer in the user's language.
+Propose better global rules; never silently change them. Reply in the user's language: the language of their message, or if the invocation has no words (e.g. just `/map-check`), the language of their earlier messages or global rules; fall back to `$LANG`.
 
 `MS` = `python3 <this skill's directory>/../map/scripts/mapskills.py`. `HOME_DIR` = the `home` value from `MS config` (normally `~/.mapskills`).
 

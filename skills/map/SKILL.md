@@ -6,7 +6,7 @@ argument-hint: "[1-9 | category]"
 
 # map
 
-Skill map for Claude Code and Codex. If the argument starts with `rcm`, follow the map-rcm skill (`<this skill's directory>/../map-rcm/SKILL.md`) instead. Answer in the user's language (Korean if they write Korean).
+Skill map for Claude Code and Codex. If the argument starts with `rcm`, follow the map-rcm skill (`<this skill's directory>/../map-rcm/SKILL.md`) instead. Reply in the user's language: the language of their message, or if the invocation has no words (e.g. just `/map-check`), the language of their earlier messages or global rules; fall back to `$LANG`.
 
 `MS` = `python3 <this skill's directory>/scripts/mapskills.py`. Registry (curated, not necessarily installed) = `<this skill's directory>/registry.json`.
 
