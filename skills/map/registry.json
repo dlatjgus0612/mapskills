@@ -1,0 +1,646 @@
+{
+ "version": 1,
+ "updated": "2026-11-03",
+ "categories": {
+  "web": {
+   "label": "웹 / Web",
+   "keywords": [
+    "web",
+    "website",
+    "landing",
+    "frontend",
+    "css",
+    "ui",
+    "react",
+    "next.js",
+    "animation",
+    "motion",
+    "gsap",
+    "design",
+    "page",
+    "browser"
+   ]
+  },
+  "app": {
+   "label": "앱 / App",
+   "keywords": [
+    "ios",
+    "android",
+    "swift",
+    "swiftui",
+    "react native",
+    "expo",
+    "mobile",
+    "flutter",
+    "kotlin"
+   ]
+  },
+  "video": {
+   "label": "영상 / Video",
+   "keywords": [
+    "video",
+    "render",
+    "motion graphics",
+    "caption",
+    "voiceover",
+    "footage",
+    "film"
+   ]
+  },
+  "code": {
+   "label": "코드 / Code",
+   "keywords": [
+    "debug",
+    "test",
+    "tdd",
+    "refactor",
+    "code review",
+    "plan",
+    "python",
+    "docker",
+    "git",
+    "bug",
+    "reverse engineer",
+    "decompile"
+   ]
+  },
+  "security": {
+   "label": "보안 / Security",
+   "keywords": [
+    "security",
+    "vulnerab",
+    "audit",
+    "semgrep",
+    "cve",
+    "secret",
+    "owasp",
+    "pentest"
+   ]
+  },
+  "ai": {
+   "label": "AI·ML",
+   "keywords": [
+    "model",
+    "llm",
+    "training",
+    "fine-tune",
+    "hugging face",
+    "pytorch",
+    "gguf",
+    "dataset",
+    "mcp server",
+    "inference"
+   ]
+  },
+  "docs": {
+   "label": "문서 / Docs",
+   "keywords": [
+    "document",
+    "docx",
+    "pdf",
+    "pptx",
+    "xlsx",
+    "report",
+    "knowledge graph",
+    "notes",
+    "slides",
+    "blog",
+    "seo"
+   ]
+  },
+  "token": {
+   "label": "토큰 절약 / Tokens",
+   "keywords": [
+    "token",
+    "terse",
+    "compress",
+    "brief",
+    "context budget"
+   ]
+  },
+  "other": {
+   "label": "기타 / Other",
+   "keywords": []
+  }
+ },
+ "groups": {
+  "design-direction": "새 페이지 디자인 방향. 하나만 켠다 (taste-skill이 기본, hallmark는 대안)",
+  "ui-refine": "기존 UI 개선. impeccable은 고치기, web-design-guidelines는 규칙 검사",
+  "motion": "React Motion 규칙과 패턴. 둘을 같이 쓴다",
+  "video-maker": "hyperframes는 코드로 만드는 모션그래픽, hypit은 AI 생성 인물·숏폼. 용도가 다르다",
+  "tdd": "TDD 스킬은 하나만",
+  "simplicity": "'최소 변경' 원칙. 전역 규칙에 이미 있으면 생략",
+  "swiftui": "SwiftUI 패턴 스킬은 하나만"
+ },
+ "skills": [
+  {
+   "id": "taste-skill",
+   "name": "taste-skill",
+   "category": "web",
+   "repo": "Leonxlnx/taste-skill",
+   "commit": "12af471f627f866411b4bd785b19646d3672784c",
+   "path": "skills/taste-skill",
+   "license": "MIT",
+   "ko": "AI 티 안 나는 페이지 디자인 방향 + 스크린샷 보고 고치기",
+   "core": true,
+   "group": "design-direction"
+  },
+  {
+   "id": "impeccable",
+   "name": "impeccable",
+   "category": "web",
+   "repo": "pbakaus/impeccable",
+   "commit": "9fadc41729c38fd47d7ae622b501558653f9d2e9",
+   "license": "Apache-2.0",
+   "ko": "기존 UI 다듬기 명령 모음 (critique·audit·polish 등)",
+   "group": "ui-refine",
+   "paths": {
+    "claude": ".claude/skills/impeccable",
+    "codex": ".agents/skills/impeccable"
+   },
+   "notes": "첫 실행 때 체크섬 검증된 실행 파일을 내려받음, 프로젝트에 PRODUCT.md·DESIGN.md 생성"
+  },
+  {
+   "id": "hallmark",
+   "name": "hallmark",
+   "category": "web",
+   "repo": "Nutlope/hallmark",
+   "commit": "4f6a46c6dc325d40ab268c93e25c7b96676ebccd",
+   "path": "skills/hallmark",
+   "license": "MIT",
+   "ko": "새 페이지 첫 시안 (매번 다른 디자인 방향)",
+   "group": "design-direction"
+  },
+  {
+   "id": "ui-ux-pro-max",
+   "name": "ui-ux-pro-max",
+   "category": "web",
+   "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+   "commit": "3a13158ff1f32156cbe144108de48eda2ecaed9a",
+   "path": ".claude/skills/ui-ux-pro-max",
+   "license": "MIT",
+   "ko": "스타일·팔레트·폰트·UX 규칙 데이터"
+  },
+  {
+   "id": "react-best-practices",
+   "name": "react-best-practices",
+   "category": "web",
+   "repo": "vercel-labs/agent-skills",
+   "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+   "path": "skills/react-best-practices",
+   "license": "MIT",
+   "ko": "React/Next.js 성능 규칙 (Vercel)"
+  },
+  {
+   "id": "web-design-guidelines",
+   "name": "web-design-guidelines",
+   "category": "web",
+   "repo": "vercel-labs/agent-skills",
+   "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+   "path": "skills/web-design-guidelines",
+   "license": "MIT",
+   "ko": "웹 인터페이스 가이드라인으로 UI 코드 검사",
+   "group": "ui-refine"
+  },
+  {
+   "id": "gsap-scrolltrigger",
+   "name": "gsap-scrolltrigger",
+   "category": "web",
+   "repo": "freshtechbro/claudedesignskills",
+   "commit": "1da73febff0c3e1dfefc07f8a5ef8f7d1dfdb6cd",
+   "path": ".claude/skills/gsap-scrolltrigger",
+   "license": "MIT",
+   "ko": "GSAP 타임라인·스크롤 연출"
+  },
+  {
+   "id": "motion-foundations",
+   "name": "motion-foundations",
+   "category": "web",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/motion-foundations",
+   "license": "MIT",
+   "ko": "Motion 토큰·spring·reduced-motion·SSR 규칙",
+   "group": "motion"
+  },
+  {
+   "id": "motion-patterns",
+   "name": "motion-patterns",
+   "category": "web",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/motion-patterns",
+   "license": "MIT",
+   "ko": "버튼·모달·페이지 전환 등 Motion 패턴",
+   "group": "motion"
+  },
+  {
+   "id": "accessibility",
+   "name": "accessibility",
+   "category": "web",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/accessibility",
+   "license": "MIT",
+   "ko": "WCAG 2.2 접근성 (웹·iOS·Android)"
+  },
+  {
+   "id": "webapp-testing",
+   "name": "webapp-testing",
+   "category": "web",
+   "repo": "anthropics/skills",
+   "commit": "ca45fc496a3436251f191354091d557da31c15b5",
+   "path": "skills/webapp-testing",
+   "license": "see LICENSE.txt",
+   "ko": "Playwright로 로컬 웹앱 띄워 확인"
+  },
+  {
+   "id": "react-three-fiber",
+   "name": "react-three-fiber",
+   "category": "web",
+   "repo": "freshtechbro/claudedesignskills",
+   "commit": "1da73febff0c3e1dfefc07f8a5ef8f7d1dfdb6cd",
+   "path": ".claude/skills/react-three-fiber",
+   "license": "MIT",
+   "ko": "React에서 Three.js 3D 씬"
+  },
+  {
+   "id": "threejs-webgl",
+   "name": "threejs-webgl",
+   "category": "web",
+   "repo": "freshtechbro/claudedesignskills",
+   "commit": "1da73febff0c3e1dfefc07f8a5ef8f7d1dfdb6cd",
+   "path": ".claude/skills/threejs-webgl",
+   "license": "MIT",
+   "ko": "순수 Three.js·WebGL·WebGPU"
+  },
+  {
+   "id": "react-native-skills",
+   "name": "react-native-skills",
+   "category": "app",
+   "repo": "vercel-labs/agent-skills",
+   "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+   "path": "skills/react-native-skills",
+   "license": "MIT",
+   "ko": "React Native/Expo 성능 규칙",
+   "core": true
+  },
+  {
+   "id": "react-native-patterns",
+   "name": "react-native-patterns",
+   "category": "app",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/react-native-patterns",
+   "license": "MIT",
+   "ko": "Expo Router·데이터 패칭·폼 구조"
+  },
+  {
+   "id": "swiftui-ui-patterns",
+   "name": "swiftui-ui-patterns",
+   "category": "app",
+   "repo": "Dimillian/Skills",
+   "commit": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
+   "path": "swiftui-ui-patterns",
+   "license": "MIT",
+   "ko": "SwiftUI 화면·내비게이션·상태 패턴",
+   "group": "swiftui"
+  },
+  {
+   "id": "swift-concurrency-expert",
+   "name": "swift-concurrency-expert",
+   "category": "app",
+   "repo": "Dimillian/Skills",
+   "commit": "05ba982bfeb0d77d3c97d4542b0ee15034d05f84",
+   "path": "swift-concurrency-expert",
+   "license": "MIT",
+   "ko": "Swift 6 동시성 에러 수정"
+  },
+  {
+   "id": "hyperframes",
+   "name": "hyperframes",
+   "category": "video",
+   "repo": "heygen-com/hyperframes",
+   "commit": "d03bdeae9d992c9bb653bb1e67cf5569d16455f3",
+   "path": "skills/hyperframes",
+   "license": "Apache-2.0",
+   "ko": "HTML·GSAP 장면을 영상으로 렌더링 (진입 스킬)",
+   "core": true,
+   "group": "video-maker",
+   "with": [
+    "hyperframes-cli",
+    "hyperframes-registry",
+    "media-use"
+   ]
+  },
+  {
+   "id": "hyperframes-cli",
+   "name": "hyperframes-cli",
+   "category": "video",
+   "repo": "heygen-com/hyperframes",
+   "commit": "d03bdeae9d992c9bb653bb1e67cf5569d16455f3",
+   "path": "skills/hyperframes-cli",
+   "license": "Apache-2.0",
+   "ko": "npx hyperframes 명령 (생성·검사·렌더)"
+  },
+  {
+   "id": "hyperframes-registry",
+   "name": "hyperframes-registry",
+   "category": "video",
+   "repo": "heygen-com/hyperframes",
+   "commit": "d03bdeae9d992c9bb653bb1e67cf5569d16455f3",
+   "path": "skills/hyperframes-registry",
+   "license": "Apache-2.0",
+   "ko": "완성 블록 약 450개 (전환·타이틀·차트)"
+  },
+  {
+   "id": "media-use",
+   "name": "media-use",
+   "category": "video",
+   "repo": "heygen-com/hyperframes",
+   "commit": "d03bdeae9d992c9bb653bb1e67cf5569d16455f3",
+   "path": "skills/media-use",
+   "license": "Apache-2.0",
+   "ko": "영상 소재 (음악·보이스·이미지·색보정)"
+  },
+  {
+   "id": "reverse-any-video",
+   "name": "reverse-any-video",
+   "category": "video",
+   "repo": "heygen-com/hyperframes",
+   "commit": "d03bdeae9d992c9bb653bb1e67cf5569d16455f3",
+   "path": "skills/reverse-any-video",
+   "license": "Apache-2.0",
+   "ko": "기존 영상을 편집 가능한 프로젝트로 재구성"
+  },
+  {
+   "id": "hypit",
+   "name": "hypit",
+   "category": "video",
+   "repo": "hypit-ai/hypit",
+   "commit": "0762c6be56c0af43fff3cdbdb285e21414dd249b",
+   "path": "skills/hypit",
+   "license": "Hypit Open Source License (Apache-2.0 + conditions)",
+   "ko": "AI 생성 인물·목소리로 숏폼 제작, 참고 영상 구조 복제",
+   "group": "video-maker",
+   "notes": "모델 API 키와 생성 비용 필요"
+  },
+  {
+   "id": "systematic-debugging",
+   "name": "systematic-debugging",
+   "category": "code",
+   "repo": "obra/superpowers",
+   "commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
+   "path": "skills/systematic-debugging",
+   "license": "MIT",
+   "ko": "버그 수정 전 원인부터 단계적으로 추적",
+   "core": true
+  },
+  {
+   "id": "test-driven-development",
+   "name": "test-driven-development",
+   "category": "code",
+   "repo": "obra/superpowers",
+   "commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
+   "path": "skills/test-driven-development",
+   "license": "MIT",
+   "ko": "테스트 먼저 쓰고 구현",
+   "group": "tdd"
+  },
+  {
+   "id": "writing-plans",
+   "name": "writing-plans",
+   "category": "code",
+   "repo": "obra/superpowers",
+   "commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
+   "path": "skills/writing-plans",
+   "license": "MIT",
+   "ko": "여러 단계 작업 실행 계획 작성"
+  },
+  {
+   "id": "ponytail",
+   "name": "ponytail",
+   "category": "code",
+   "repo": "DietrichGebert/ponytail",
+   "commit": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+   "path": "skills/ponytail",
+   "license": "MIT",
+   "ko": "최소 변경으로 해결하는 모드",
+   "group": "simplicity"
+  },
+  {
+   "id": "ponytail-review",
+   "name": "ponytail-review",
+   "category": "code",
+   "repo": "DietrichGebert/ponytail",
+   "commit": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+   "path": "skills/ponytail-review",
+   "license": "MIT",
+   "ko": "로직·안전성·불필요 코드 위주 리뷰"
+  },
+  {
+   "id": "python-patterns",
+   "name": "python-patterns",
+   "category": "code",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/python-patterns",
+   "license": "MIT",
+   "ko": "Python 관용구·타입 힌트"
+  },
+  {
+   "id": "python-testing",
+   "name": "python-testing",
+   "category": "code",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/python-testing",
+   "license": "MIT",
+   "ko": "pytest fixture·mock·parametrize"
+  },
+  {
+   "id": "docker-patterns",
+   "name": "docker-patterns",
+   "category": "code",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/docker-patterns",
+   "license": "MIT",
+   "ko": "Dockerfile·Compose·컨테이너 보안"
+  },
+  {
+   "id": "reverse-engineer-anything",
+   "name": "reverse-engineer-anything",
+   "category": "code",
+   "repo": "morluto/rea",
+   "commit": "bf34d0d2fc3cc22076f49d682e74a0b71aa1db18",
+   "path": "skills/reverse-engineer-anything",
+   "license": "MIT",
+   "ko": "바이너리·앱·펌웨어 리버스 엔지니어링 (REA)",
+   "notes": "rea CLI 없으면 npx rea-agents 사용"
+  },
+  {
+   "id": "security-audit",
+   "name": "security-audit",
+   "category": "security",
+   "repo": "cloudflare/security-audit-skill",
+   "commit": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
+   "path": "skills/security-audit",
+   "license": "MIT",
+   "ko": "코드베이스 전체 보안 감사 (서브에이전트 검증)",
+   "core": true
+  },
+  {
+   "id": "software-security",
+   "name": "software-security",
+   "category": "security",
+   "repo": "project-codeguard/rules",
+   "commit": "036b66c1554f36a65d6f7a0bf3c8ff9804e0f998",
+   "path": "skills/software-security",
+   "license": "CC-BY-4.0",
+   "ko": "코드 작성 시 보안 기본값 (CodeGuard)"
+  },
+  {
+   "id": "differential-review",
+   "name": "differential-review",
+   "category": "security",
+   "repo": "trailofbits/skills",
+   "commit": "2be6433b39e009cd2b6fd3be1895f6b1faa5af9a",
+   "path": "plugins/differential-review/skills/differential-review",
+   "license": "CC-BY-SA-4.0",
+   "ko": "PR·diff 보안 리뷰"
+  },
+  {
+   "id": "supply-chain-risk-auditor",
+   "name": "supply-chain-risk-auditor",
+   "category": "security",
+   "repo": "trailofbits/skills",
+   "commit": "2be6433b39e009cd2b6fd3be1895f6b1faa5af9a",
+   "path": "plugins/supply-chain-risk-auditor/skills/supply-chain-risk-auditor",
+   "license": "CC-BY-SA-4.0",
+   "ko": "의존성 공급망 위험 점검"
+  },
+  {
+   "id": "fp-check",
+   "name": "fp-check",
+   "category": "security",
+   "repo": "trailofbits/skills",
+   "commit": "2be6433b39e009cd2b6fd3be1895f6b1faa5af9a",
+   "path": "plugins/fp-check/skills/fp-check",
+   "license": "CC-BY-SA-4.0",
+   "ko": "의심 취약점 오탐 판정"
+  },
+  {
+   "id": "hf-cli",
+   "name": "hf-cli",
+   "category": "ai",
+   "repo": "huggingface/skills",
+   "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+   "path": "skills/hf-cli",
+   "license": "Apache-2.0",
+   "ko": "Hugging Face hf CLI (모델·데이터셋 받기·올리기)",
+   "core": true
+  },
+  {
+   "id": "huggingface-local-models",
+   "name": "huggingface-local-models",
+   "category": "ai",
+   "repo": "huggingface/skills",
+   "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+   "path": "skills/huggingface-local-models",
+   "license": "Apache-2.0",
+   "ko": "로컬 GGUF 모델·양자화 선택, llama.cpp 서버"
+  },
+  {
+   "id": "huggingface-llm-trainer",
+   "name": "huggingface-llm-trainer",
+   "category": "ai",
+   "repo": "huggingface/skills",
+   "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+   "path": "skills/huggingface-llm-trainer",
+   "license": "Apache-2.0",
+   "ko": "HF Jobs로 파인튜닝"
+  },
+  {
+   "id": "trl-training",
+   "name": "trl-training",
+   "category": "ai",
+   "repo": "huggingface/skills",
+   "commit": "25910b3d0ba31a2ba102f901cdc9e008c278a69c",
+   "path": "skills/trl-training",
+   "license": "Apache-2.0",
+   "ko": "TRL 학습 코드"
+  },
+  {
+   "id": "pytorch-patterns",
+   "name": "pytorch-patterns",
+   "category": "ai",
+   "repo": "affaan-m/ECC",
+   "commit": "b38be6a7f6350964d59328b52f0624e1d1d552d1",
+   "path": "skills/pytorch-patterns",
+   "license": "MIT",
+   "ko": "PyTorch 학습 루프·재현성"
+  },
+  {
+   "id": "mcp-builder",
+   "name": "mcp-builder",
+   "category": "ai",
+   "repo": "anthropics/skills",
+   "commit": "ca45fc496a3436251f191354091d557da31c15b5",
+   "path": "skills/mcp-builder",
+   "license": "see LICENSE.txt",
+   "ko": "MCP 서버 만들기"
+  },
+  {
+   "id": "caveman",
+   "name": "caveman",
+   "category": "token",
+   "repo": "JuliusBrussee/caveman",
+   "commit": "9b68f7ed12b05e7efaff18e65c5a3fc2849fd0a4",
+   "path": "skills/caveman",
+   "license": "Apache-2.0",
+   "ko": "답변을 짧게 해서 토큰 절약",
+   "core": true
+  },
+  {
+   "id": "graphify",
+   "name": "graphify",
+   "category": "docs",
+   "type": "tool",
+   "core": true,
+   "repo": "Graphify-Labs/graphify",
+   "license": "MIT",
+   "ko": "코드·문서를 지식 그래프로 만들어 구조 질문",
+   "install": "uv tool install graphifyy && graphify install --platform claude",
+   "notes": "graphify install 이 CLAUDE.md 끝에 몇 줄을 추가함 → 기존 규칙을 건드리지 않으려면 설치 후 그 줄을 지울지 사용자에게 묻는다"
+  },
+  {
+   "id": "agent-reach",
+   "name": "agent-reach",
+   "category": "docs",
+   "type": "tool",
+   "repo": "Panniantong/Agent-Reach",
+   "license": "MIT",
+   "ko": "일반 검색으로 안 읽히는 플랫폼(X·Reddit·YouTube 자막·샤오훙수) 읽기",
+   "install": "uv tool install https://github.com/Panniantong/Agent-Reach/releases/latest/download/agent-reach.zip && agent-reach setup",
+   "notes": "PyPI의 agent-reach는 다른 패키지라 쓰지 않는다"
+  },
+  {
+   "id": "claude-seo",
+   "name": "seo",
+   "category": "docs",
+   "type": "claude-plugin",
+   "repo": "AgriciDaniel/claude-seo",
+   "license": "MIT",
+   "ko": "사이트 SEO 감사·schema·AI 검색 노출 (Claude 전용 플러그인)",
+   "install": "claude plugin marketplace add AgriciDaniel/claude-seo && claude plugin install claude-seo@agricidaniel-claude-seo",
+   "notes": "Edit/Write마다 로컬 JSON-LD 검사 hook이 돈다"
+  }
+ ],
+ "bundled": {
+  "map": "other",
+  "map-set": "other",
+  "map-check": "other",
+  "ui-effects-glossary": "web"
+ }
+}

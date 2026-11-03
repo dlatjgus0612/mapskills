@@ -1,0 +1,16 @@
+{
+  "name": "mapskills",
+  "owner": {
+    "name": "dlatjgus0612"
+  },
+  "plugins": [
+    {
+      "name": "mapskills",
+      "source": "./",
+      "description": "Skill map and recommender: /map, /map rcm, /map-set, /map-check."
+    }
+  ],
+  "metadata": {
+    "description": "mapskills: skill map, recommender, installer and cleanup for Claude Code and Codex."
+  }
+}
