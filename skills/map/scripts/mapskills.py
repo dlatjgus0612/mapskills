@@ -9,12 +9,15 @@ Commands:
   project [DIR]                 detect the stack of a project directory
   usage [--days N]              count local skill invocations (if usage is on)
   log --tags a,b --skills x,y   append an rcm record to usage.jsonl (if usage is on)
-  install ID [ID...]            fetch pinned commit + risk report + link
-  link SRC [--name N] [--only claude|codex]
-  unlink NAME                   remove a link that mapskills created
+  check [ID...] [--upstream]    per registry entry: new | up-to-date | update | latest | user-owned | manual
+                                (--upstream also reports the upstream HEAD)
+  install ID [ID...] [--latest] [--dry-run]
+                                fetch pinned (or upstream HEAD) commit, update if older, risk report, link
+  unlink NAME [NAME...]         remove links that mapskills created
   status                        links mapskills created
-  updates                       pinned commit vs upstream HEAD for fetched repos
-  config [KEY VALUE]            show or set config (usage: on|off)
+  agents [--all]                known agents (detected / selected), from agents.json
+  self-install [--remove]       link the bundled mapskills skills into the chosen agents
+  config [KEY VALUE]            usage on|off · root <dir> · agents claude-code,codex,cursor,name=/path
 """
 import json, os, re, subprocess, sys, time
 from pathlib import Path
@@ -22,7 +25,8 @@ from pathlib import Path
 HOME = Path.home()
 MS_HOME = Path(os.environ.get("MAPSKILLS_HOME", HOME / ".mapskills"))
 REGISTRY = Path(__file__).resolve().parent.parent / "registry.json"
-TARGETS = {"claude": HOME / ".claude" / "skills", "codex": HOME / ".agents" / "skills"}
+AGENTS_FILE = Path(__file__).resolve().parent.parent / "agents.json"
+BUNDLED = ["map", "map-rcm", "map-set", "map-check", "map-rule", "ui-effects-glossary"]
 READ_ONLY_DIRS = {"codex-legacy": HOME / ".codex" / "skills"}
 PLUGIN_GLOB = HOME / ".claude" / "plugins" / "cache"
 RISK = [
@@ -48,8 +52,60 @@ def save_json(p, data):
     Path(p).write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 
 
+def known_agents():
+    """id -> {label, skills Path, detect [Path], aliases} from agents.json."""
+    doc = load_json(AGENTS_FILE, {"agents": [], "default": ["claude-code", "codex"]})
+    out = {}
+    for a in doc["agents"]:
+        out[a["id"]] = {"label": a["label"], "skills": Path(a["skills"].replace("~", str(HOME), 1)),
+                        "detect": [Path(x.replace("~", str(HOME), 1)) for x in a.get("detect", [])],
+                        "aliases": a.get("aliases", [])}
+    return out, doc.get("default", ["claude-code", "codex"])
+
+
+def resolve_agent(name):
+    agents, _ = known_agents()
+    name = {"claude": "claude-code"}.get(name, name)
+    if name in agents:
+        return name
+    for aid, a in agents.items():
+        if name in a["aliases"]:
+            return aid
+    return None
+
+
 def config():
-    return {"usage": True, **load_json(MS_HOME / "config.json", {})}
+    _, default = known_agents()
+    return {"usage": True, "agents": default, **load_json(MS_HOME / "config.json", {})}
+
+
+def vendor_dir():
+    """Where fetched repos live: config 'root' (user-chosen folder) or ~/.mapskills/vendor."""
+    root = config().get("root")
+    return Path(root).expanduser() if root else MS_HOME / "vendor"
+
+
+def targets():
+    """Chosen agents -> skills folder. Entries can be ids/aliases or custom 'name=/path'. Same folder only once."""
+    agents, _ = known_agents()
+    out, seen = {}, set()
+    for entry in config()["agents"]:
+        if "=" in entry:
+            name, path = entry.split("=", 1)
+            folder = Path(path).expanduser()
+        else:
+            name = resolve_agent(entry)
+            if not name:
+                continue
+            folder = agents[name]["skills"]
+        if folder not in seen:
+            seen.add(folder)
+            out[name] = folder
+    return out
+
+
+def is_claude(agent):
+    return agent == "claude-code"
 
 
 def registry():
@@ -94,28 +150,36 @@ def classify(name, desc, reg_by_name, cats):
     return best
 
 
+_GIT_CACHE = {}
+
+
 def git_info(path):
-    try:
-        top = subprocess.run(["git", "-C", str(path), "rev-parse", "--show-toplevel"],
-                             capture_output=True, text=True, timeout=5).stdout.strip()
-        if not top:
-            return {}
-        url = subprocess.run(["git", "-C", top, "remote", "get-url", "origin"],
-                             capture_output=True, text=True, timeout=5).stdout.strip()
-        date = subprocess.run(["git", "-C", top, "log", "-1", "--format=%cs"],
-                              capture_output=True, text=True, timeout=5).stdout.strip()
-        url = re.sub(r"^https://[^@/]+@", "https://", url)  # never keep credentials
-        return {"repo": url, "updated": date}
-    except (OSError, subprocess.SubprocessError):
+    """Origin URL and last commit date of the repo containing path (cached per repo)."""
+    top = next((d for d in (path, *path.parents) if (d / ".git").exists()), None)
+    if top is None:
         return {}
+    if top not in _GIT_CACHE:
+        run = lambda *a: subprocess.run(["git", "-C", str(top), *a], capture_output=True, text=True, timeout=5).stdout.strip()
+        try:
+            url = re.sub(r"^https://[^@/]+@", "https://", run("remote", "get-url", "origin"))  # never keep credentials
+            _GIT_CACHE[top] = {"repo": url, "updated": run("log", "-1", "--format=%cs")}
+        except (OSError, subprocess.SubprocessError):
+            _GIT_CACHE[top] = {}
+    return _GIT_CACHE[top]
 
 
 def iter_skill_dirs():
-    for agent, d in {**TARGETS, **READ_ONLY_DIRS}.items():
+    agents, _ = known_agents()
+    folders, seen = {}, set()
+    for aid, a in agents.items():
+        if a["skills"] not in seen:
+            seen.add(a["skills"])
+            folders[aid] = a["skills"]
+    for name, d in {**folders, **targets(), **READ_ONLY_DIRS}.items():
         if d.is_dir():
             for p in sorted(d.iterdir()):
                 if (p / "SKILL.md").is_file():
-                    yield agent, p
+                    yield name, p
     if PLUGIN_GLOB.is_dir():
         for p in sorted(PLUGIN_GLOB.glob("*/*/*/skills/*")):
             if (p / "SKILL.md").is_file():
@@ -265,8 +329,9 @@ def link(src, name, only=None):
         sys.exit(f"no SKILL.md in {src}")
     state = load_json(MS_HOME / "state.json", {"links": {}})
     done = []
-    for agent, d in TARGETS.items():
-        if only and agent != only:
+    for agent, d in targets().items():
+        # registry variants: "claude" -> Claude Code only, "codex" -> every other agent
+        if only == "claude" and not is_claude(agent) or only == "codex" and is_claude(agent):
             continue
         dst = d / name
         if dst.is_symlink() and dst.resolve() == src:
@@ -283,12 +348,6 @@ def link(src, name, only=None):
         state["links"][name]["dst"] = sorted(set(state["links"][name]["dst"]) | set(done))
         save_json(MS_HOME / "state.json", state)
         print(f"LINKED {name}: {', '.join(done)}")
-
-
-def cmd_link(args):
-    name = args[args.index("--name") + 1] if "--name" in args else Path(args[0]).name
-    only = args[args.index("--only") + 1] if "--only" in args else None
-    link(args[0], name, only)
 
 
 def cmd_unlink(args):
@@ -322,8 +381,67 @@ def risk_report(root):
     return hits, bins
 
 
+def _git(repo_dir, *a):
+    return subprocess.run(["git", "-C", str(repo_dir), *a], check=True, capture_output=True, text=True).stdout.strip()
+
+
+def _upstream_head(repo):
+    try:
+        out = subprocess.run(["git", "ls-remote", f"https://github.com/{repo}.git", "HEAD"],
+                             capture_output=True, text=True, timeout=20).stdout.split()
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return out[0] if out else ""
+
+
+def _checkout(repo_dir, commit):
+    """Shallow-fetch one commit into repo_dir (created if needed) and check it out."""
+    if not (repo_dir / ".git").exists():
+        repo_dir.mkdir(parents=True, exist_ok=True)
+        _git(repo_dir, "init", "-q")
+        _git(repo_dir, "remote", "add", "origin", f"https://github.com/{repo_dir.name.replace('__', '/', 1)}.git")
+    _git(repo_dir, "fetch", "-q", "--depth", "1", "origin", commit)
+    _git(repo_dir, "checkout", "-q", "FETCH_HEAD")
+
+
+def _status(s, state):
+    """One registry entry -> new | managed (up-to-date / update) | user-owned (same name, not ours)."""
+    if s.get("type", "git") != "git":
+        return {"id": s["id"], "status": "manual", "how": s.get("install", "")}
+    repo_dir = vendor_dir() / s["repo"].replace("/", "__")
+    ours = s["name"] in state["links"]
+    present = [a for a, d in targets().items() if (d / s["name"]).exists()]
+    if ours and repo_dir.is_dir():
+        cur = _git(repo_dir, "rev-parse", "HEAD")
+        if state["links"][s["name"]].get("latest"):
+            status = "latest"  # user chose upstream HEAD; do not pull them back to the pin
+        else:
+            status = "up-to-date" if cur.startswith(s["commit"][:12]) else "update"
+        return {"id": s["id"], "status": status, "current": cur[:12], "pinned": s["commit"][:12], "agents": present}
+    if present:
+        return {"id": s["id"], "status": "user-owned", "agents": present,
+                "note": "same name already installed by you; mapskills will not touch it"}
+    return {"id": s["id"], "status": "new"}
+
+
+def cmd_check(args):
+    reg = {s["id"]: s for s in registry()["skills"]}
+    state = load_json(MS_HOME / "state.json", {"links": {}})
+    ids = [a for a in args if not a.startswith("--")] or list(reg)
+    rows = []
+    for i in ids:
+        row = _status(reg[i], state) if i in reg else {"id": i, "status": "unknown"}
+        if "--upstream" in args and reg.get(i, {}).get("type", "git") == "git":
+            head = _upstream_head(reg[i]["repo"])
+            row["upstream"] = head[:12] or "unreachable"
+            row["newer_upstream"] = bool(head) and not head.startswith(reg[i]["commit"][:12])
+        rows.append(row)
+    print(json.dumps(rows, ensure_ascii=False))
+
+
 def cmd_install(args):
     reg = {s["id"]: s for s in registry()["skills"]}
+    latest = "--latest" in args
     for sid in [a for a in args if not a.startswith("--")]:
         s = reg.get(sid)
         if not s:
@@ -332,25 +450,36 @@ def cmd_install(args):
         if s.get("type", "git") != "git":
             print(f"MANUAL {sid}: {s.get('install', 'see registry notes')}")
             continue
-        repo_dir = MS_HOME / "vendor" / s["repo"].replace("/", "__")
-        if not repo_dir.is_dir():
-            repo_dir.mkdir(parents=True)
-            run = lambda *a: subprocess.run(["git", "-C", str(repo_dir), *a], check=True, capture_output=True, text=True)
-            run("init", "-q")
-            run("remote", "add", "origin", f"https://github.com/{s['repo']}.git")
-            run("fetch", "-q", "--depth", "1", "origin", s["commit"])
-            run("checkout", "-q", "FETCH_HEAD")
+        repo_dir = vendor_dir() / s["repo"].replace("/", "__")
+        target = _upstream_head(s["repo"]) if latest else s["commit"]
+        if not target:
+            print(f"ERROR {sid}: could not reach upstream")
+            continue
+        cur = subprocess.run(["git", "-C", str(repo_dir), "rev-parse", "-q", "--verify", "HEAD"],
+                             capture_output=True, text=True).stdout.strip() if repo_dir.is_dir() else ""
+        dry = "--dry-run" in args
+        if cur.startswith(target[:12]):
+            print(f"UP-TO-DATE {sid} @{target[:12]}")
+        elif not dry or not cur:  # a dry run on a fresh repo still needs the files to report risk
+            _checkout(repo_dir, target)
+            if not dry:
+                print(f"{'UPDATED' if cur else 'FETCHED'} {sid} {cur[:12] or '-'} -> {target[:12]}")
         paths = s.get("paths") or {"both": s["path"]}
         for agent, rel in paths.items():
             src = repo_dir / rel
             hits, bins = risk_report(src)
-            print(f"== {sid} ({s['repo']}@{s['commit'][:12]}, {s.get('license', '?')}) -> {rel}")
+            print(f"== {sid} ({s['repo']}@{target[:12]}, {s.get('license', '?')}) -> {rel}")
             for h in sorted(set(hits))[:25]:
                 print(f"  RISK {h}")
             if bins:
                 print(f"  EXECUTABLES {', '.join(bins[:10])}")
-            if "--dry-run" not in args:
+            if not dry:
                 link(src, s["name"], None if agent == "both" else agent)
+        if not dry:
+            state = load_json(MS_HOME / "state.json", {"links": {}})
+            if s["name"] in state["links"]:
+                state["links"][s["name"]].update({"commit": target[:12], "latest": latest})
+                save_json(MS_HOME / "state.json", state)
 
 
 def cmd_status(args):
@@ -361,31 +490,57 @@ def cmd_status(args):
         print("no links created by mapskills")
 
 
-def cmd_updates(args):
-    reg = {s["repo"]: s["commit"] for s in registry()["skills"] if s.get("type", "git") == "git"}
-    vendor = MS_HOME / "vendor"
-    for d in sorted(vendor.iterdir()) if vendor.is_dir() else []:
-        repo = d.name.replace("__", "/", 1)
-        try:
-            head = subprocess.run(["git", "ls-remote", f"https://github.com/{repo}.git", "HEAD"],
-                                  capture_output=True, text=True, timeout=20).stdout.split()[0]
-        except (OSError, subprocess.SubprocessError, IndexError):
-            print(f"{repo}: could not reach upstream")
-            continue
-        pinned = reg.get(repo, "")
-        print(f"{repo}: pinned {pinned[:12]} upstream {head[:12]} {'UP-TO-DATE' if head.startswith(pinned[:12]) else 'NEWER-UPSTREAM'}")
+def cmd_agents(args):
+    """List known agents: detected on this machine, selected in config."""
+    agents, _ = known_agents()
+    chosen = set(targets().values())
+    rows = []
+    for aid, a in agents.items():
+        detected = any(d.exists() for d in a["detect"]) or a["skills"].is_dir()
+        if detected or a["skills"] in chosen or "--all" in args:
+            rows.append({"id": aid, "label": a["label"], "skills": str(a["skills"]).replace(str(HOME), "~", 1),
+                         "detected": detected, "selected": a["skills"] in chosen})
+    print(json.dumps(rows, ensure_ascii=False, indent=1))
+
+
+def cmd_self_install(args):
+    """Link (or with --remove, unlink) the bundled mapskills skills into the chosen agents' folders."""
+    root = Path(__file__).resolve().parent.parent.parent
+    if "--remove" in args:
+        cmd_unlink([n for n in BUNDLED if n in load_json(MS_HOME / "state.json", {"links": {}})["links"]])
+        return
+    for name in BUNDLED:
+        link(root / name, name)
+    print("Agents: " + ", ".join(f"{k} ({str(v).replace(str(HOME), '~', 1)})" for k, v in targets().items()))
 
 
 def cmd_config(args):
+    """config usage on|off · config root <dir> · config agents claude-code,codex,name=/path"""
     cfg = config()
     if len(args) == 2:
-        cfg[args[0]] = args[1].lower() in ("on", "true", "1", "yes")
+        key, val = args
+        if key == "usage":
+            cfg[key] = val.lower() in ("on", "true", "1", "yes")
+        elif key == "root":
+            cfg[key] = str(Path(val).expanduser())
+        elif key == "agents":
+            picked = []
+            for a in val.split(","):
+                a = a.strip()
+                if "=" in a or resolve_agent(a):
+                    picked.append(a if "=" in a else resolve_agent(a))
+                else:
+                    print(f"unknown agent {a} (see: agents --all, or use name=/path)", file=sys.stderr)
+            cfg[key] = list(dict.fromkeys(picked)) or known_agents()[1]
+        else:
+            sys.exit(f"unknown key {key}")
         save_json(MS_HOME / "config.json", cfg)
-    print(json.dumps(cfg))
+    print(json.dumps({**cfg, "home": str(MS_HOME), "vendor_dir": str(vendor_dir()), "first_run": not (MS_HOME / "config.json").exists()}))
 
 
-COMMANDS = {"scan": cmd_scan, "project": cmd_project, "usage": cmd_usage, "log": cmd_log, "install": cmd_install,
-            "link": cmd_link, "unlink": cmd_unlink, "status": cmd_status, "updates": cmd_updates, "config": cmd_config}
+COMMANDS = {"scan": cmd_scan, "project": cmd_project, "usage": cmd_usage, "log": cmd_log, "check": cmd_check,
+            "install": cmd_install, "unlink": cmd_unlink, "status": cmd_status, "agents": cmd_agents,
+            "self-install": cmd_self_install, "config": cmd_config}
 
 if __name__ == "__main__":
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:

@@ -1,7 +1,7 @@
 {
   "name": "mapskills",
   "version": "0.1.0",
-  "description": "Skill map and recommender for Claude Code and Codex: /map, /map rcm <task>, /map-set, /map-check.",
+  "description": "Skill map and recommender for Claude Code and Codex: /map, /map-rcm <task>, /map-set, /map-check, /map-rule.",
   "author": { "name": "dlatjgus0612", "url": "https://github.com/dlatjgus0612" },
   "homepage": "https://github.com/dlatjgus0612/mapskills",
   "repository": "https://github.com/dlatjgus0612/mapskills",

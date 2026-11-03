@@ -13,7 +13,8 @@ Audit the user's skills and propose a tidy setup. Answer in the user's language.
 ## Gather
 1. `MS scan --json` (all skills, agents, git repo and last commit date).
 2. `MS usage --days 30` (local invocation counts; skip if usage is off).
-3. `MS updates` (pinned commit vs upstream for repos mapskills fetched).
+3. `MS check --upstream` (installed vs pinned vs upstream HEAD for registry skills).
+   For other git-based skills use `git ls-remote <url> HEAD` only. Never fetch, pull or write in the user's repos.
 4. Read registry `groups` and `notes`.
 
 ## Analyse
@@ -21,7 +22,7 @@ For each category, find:
 - **Overlaps**: two or more skills doing the same job. Use registry groups first, then compare descriptions; open both SKILL.md files before judging. Prefer the one that is more specific, deeper (reference files, examples), maintained more recently, and actually used.
 - **Duplicates of rules**: a skill whose content is already in the user's global rules (CLAUDE.md / AGENTS.md). Read the rules, do not edit them.
 - **Unused**: installed but zero uses in 30 days and not a core skill. Suggest disabling, not deleting.
-- **Outdated**: last upstream commit older than 9 months, or `NEWER-UPSTREAM` from `MS updates`.
+- **Outdated**: last upstream commit older than 9 months, or `newer_upstream: true` from `MS check --upstream`.
 - **Agent gaps**: a skill only one agent has when the other could use it too.
 - **Better options**: a registry entry clearly stronger than an installed skill for the same job. Explain the concrete difference.
 

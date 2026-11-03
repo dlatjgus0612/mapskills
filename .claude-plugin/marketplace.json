@@ -7,7 +7,7 @@
     {
       "name": "mapskills",
       "source": "./",
-      "description": "Skill map and recommender: /map, /map rcm, /map-set, /map-check."
+      "description": "Skill map and recommender: /map, /map-rcm, /map-set, /map-check, /map-rule."
     }
   ],
   "metadata": {

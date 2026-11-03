@@ -1,0 +1,616 @@
+{
+ "source": "vercel-labs/skills docs/agents.md (global paths), checked 2026-11-03",
+ "default": [
+  "claude-code",
+  "codex"
+ ],
+ "note": "Several agents read the same folder: 'codex' covers Codex, Cline, Warp, Zed, Kimi Code CLI, Pi and others via ~/.agents/skills.",
+ "agents": [
+  {
+   "id": "aider-desk",
+   "aliases": [],
+   "label": "AiderDesk",
+   "skills": "~/.aider-desk/skills",
+   "detect": [
+    "~/.aider-desk"
+   ]
+  },
+  {
+   "id": "amp",
+   "aliases": [
+    "replit",
+    "universal"
+   ],
+   "label": "Amp, Replit, Universal",
+   "skills": "~/.config/agents/skills",
+   "detect": [
+    "~/.config/agents"
+   ]
+  },
+  {
+   "id": "antigravity",
+   "aliases": [],
+   "label": "Antigravity",
+   "skills": "~/.gemini/antigravity/skills",
+   "detect": [
+    "~/.gemini"
+   ]
+  },
+  {
+   "id": "antigravity-cli",
+   "aliases": [],
+   "label": "Antigravity CLI",
+   "skills": "~/.gemini/antigravity-cli/skills",
+   "detect": [
+    "~/.gemini"
+   ]
+  },
+  {
+   "id": "astrbot",
+   "aliases": [],
+   "label": "AstrBot",
+   "skills": "~/.astrbot/data/skills",
+   "detect": [
+    "~/.astrbot"
+   ]
+  },
+  {
+   "id": "autohand-code",
+   "aliases": [],
+   "label": "Autohand Code CLI",
+   "skills": "~/.autohand/skills",
+   "detect": [
+    "~/.autohand"
+   ]
+  },
+  {
+   "id": "augment",
+   "aliases": [],
+   "label": "Augment",
+   "skills": "~/.augment/skills",
+   "detect": [
+    "~/.augment"
+   ]
+  },
+  {
+   "id": "bob",
+   "aliases": [],
+   "label": "IBM Bob",
+   "skills": "~/.bob/skills",
+   "detect": [
+    "~/.bob"
+   ]
+  },
+  {
+   "id": "claude-code",
+   "aliases": [],
+   "label": "Claude Code",
+   "skills": "~/.claude/skills",
+   "detect": [
+    "~/.claude"
+   ]
+  },
+  {
+   "id": "openclaw",
+   "aliases": [],
+   "label": "OpenClaw",
+   "skills": "~/.openclaw/skills",
+   "detect": [
+    "~/.openclaw"
+   ]
+  },
+  {
+   "id": "codex",
+   "aliases": [
+    "cline",
+    "dexto",
+    "fx",
+    "kimi-code-cli",
+    "loaf",
+    "pi",
+    "sarvam-code",
+    "warp",
+    "zed"
+   ],
+   "label": "Cline, Codex, Dexto, fx, Kimi Code CLI, Loaf, Pi, Sarvam Code, Warp, Zed",
+   "skills": "~/.agents/skills",
+   "detect": [
+    "~/.codex",
+    "~/.agents",
+    "~/.cline",
+    "~/.config/zed",
+    "~/.warp",
+    "~/.kimi",
+    "~/.pi"
+   ]
+  },
+  {
+   "id": "codearts-agent",
+   "aliases": [],
+   "label": "CodeArts Agent",
+   "skills": "~/.codeartsdoer/skills",
+   "detect": [
+    "~/.codeartsdoer"
+   ]
+  },
+  {
+   "id": "codebuddy",
+   "aliases": [],
+   "label": "CodeBuddy",
+   "skills": "~/.codebuddy/skills",
+   "detect": [
+    "~/.codebuddy"
+   ]
+  },
+  {
+   "id": "codemaker",
+   "aliases": [],
+   "label": "Codemaker",
+   "skills": "~/.codemaker/skills",
+   "detect": [
+    "~/.codemaker"
+   ]
+  },
+  {
+   "id": "codestudio",
+   "aliases": [],
+   "label": "Code Studio",
+   "skills": "~/.codestudio/skills",
+   "detect": [
+    "~/.codestudio"
+   ]
+  },
+  {
+   "id": "command-code",
+   "aliases": [],
+   "label": "Command Code",
+   "skills": "~/.commandcode/skills",
+   "detect": [
+    "~/.commandcode"
+   ]
+  },
+  {
+   "id": "continue",
+   "aliases": [],
+   "label": "Continue",
+   "skills": "~/.continue/skills",
+   "detect": [
+    "~/.continue"
+   ]
+  },
+  {
+   "id": "cortex",
+   "aliases": [],
+   "label": "Cortex Code",
+   "skills": "~/.snowflake/cortex/skills",
+   "detect": [
+    "~/.snowflake"
+   ]
+  },
+  {
+   "id": "crush",
+   "aliases": [],
+   "label": "Crush",
+   "skills": "~/.config/crush/skills",
+   "detect": [
+    "~/.config/crush"
+   ]
+  },
+  {
+   "id": "cursor",
+   "aliases": [],
+   "label": "Cursor",
+   "skills": "~/.cursor/skills",
+   "detect": [
+    "~/.cursor"
+   ]
+  },
+  {
+   "id": "deepagents",
+   "aliases": [],
+   "label": "Deep Agents",
+   "skills": "~/.deepagents/agent/skills",
+   "detect": [
+    "~/.deepagents"
+   ]
+  },
+  {
+   "id": "devin",
+   "aliases": [],
+   "label": "Devin for Terminal",
+   "skills": "~/.config/devin/skills",
+   "detect": [
+    "~/.config/devin"
+   ]
+  },
+  {
+   "id": "droid",
+   "aliases": [],
+   "label": "Droid",
+   "skills": "~/.factory/skills",
+   "detect": [
+    "~/.factory"
+   ]
+  },
+  {
+   "id": "firebender",
+   "aliases": [],
+   "label": "Firebender",
+   "skills": "~/.firebender/skills",
+   "detect": [
+    "~/.firebender"
+   ]
+  },
+  {
+   "id": "forgecode",
+   "aliases": [],
+   "label": "ForgeCode",
+   "skills": "~/.forge/skills",
+   "detect": [
+    "~/.forge"
+   ]
+  },
+  {
+   "id": "gemini-cli",
+   "aliases": [],
+   "label": "Gemini CLI",
+   "skills": "~/.gemini/skills",
+   "detect": [
+    "~/.gemini"
+   ]
+  },
+  {
+   "id": "github-copilot",
+   "aliases": [],
+   "label": "GitHub Copilot",
+   "skills": "~/.copilot/skills",
+   "detect": [
+    "~/.copilot"
+   ]
+  },
+  {
+   "id": "goose",
+   "aliases": [],
+   "label": "Goose",
+   "skills": "~/.config/goose/skills",
+   "detect": [
+    "~/.config/goose"
+   ]
+  },
+  {
+   "id": "grok",
+   "aliases": [],
+   "label": "Grok Build",
+   "skills": "~/.grok/skills",
+   "detect": [
+    "~/.grok"
+   ]
+  },
+  {
+   "id": "hermes-agent",
+   "aliases": [],
+   "label": "Hermes Agent",
+   "skills": "~/.hermes/skills",
+   "detect": [
+    "~/.hermes"
+   ]
+  },
+  {
+   "id": "inference-sh",
+   "aliases": [],
+   "label": "inference.sh",
+   "skills": "~/.inferencesh/skills",
+   "detect": [
+    "~/.inferencesh"
+   ]
+  },
+  {
+   "id": "jazz",
+   "aliases": [],
+   "label": "Jazz",
+   "skills": "~/.jazz/skills",
+   "detect": [
+    "~/.jazz"
+   ]
+  },
+  {
+   "id": "junie",
+   "aliases": [],
+   "label": "Junie",
+   "skills": "~/.junie/skills",
+   "detect": [
+    "~/.junie"
+   ]
+  },
+  {
+   "id": "iflow-cli",
+   "aliases": [],
+   "label": "iFlow CLI",
+   "skills": "~/.iflow/skills",
+   "detect": [
+    "~/.iflow"
+   ]
+  },
+  {
+   "id": "kilo",
+   "aliases": [],
+   "label": "Kilo Code",
+   "skills": "~/.kilo/skills",
+   "detect": [
+    "~/.kilo"
+   ]
+  },
+  {
+   "id": "kimchi",
+   "aliases": [],
+   "label": "Kimchi",
+   "skills": "~/.config/kimchi/harness/skills",
+   "detect": [
+    "~/.config/kimchi"
+   ]
+  },
+  {
+   "id": "kiro-cli",
+   "aliases": [],
+   "label": "Kiro CLI",
+   "skills": "~/.kiro/skills",
+   "detect": [
+    "~/.kiro"
+   ]
+  },
+  {
+   "id": "kode",
+   "aliases": [],
+   "label": "Kode",
+   "skills": "~/.kode/skills",
+   "detect": [
+    "~/.kode"
+   ]
+  },
+  {
+   "id": "lingma",
+   "aliases": [],
+   "label": "Lingma",
+   "skills": "~/.lingma/skills",
+   "detect": [
+    "~/.lingma"
+   ]
+  },
+  {
+   "id": "mcpjam",
+   "aliases": [],
+   "label": "MCPJam",
+   "skills": "~/.mcpjam/skills",
+   "detect": [
+    "~/.mcpjam"
+   ]
+  },
+  {
+   "id": "minimax-code",
+   "aliases": [],
+   "label": "MiniMax Code",
+   "skills": "~/.minimax/skills",
+   "detect": [
+    "~/.minimax"
+   ]
+  },
+  {
+   "id": "mistral-vibe",
+   "aliases": [],
+   "label": "Mistral Vibe",
+   "skills": "~/.vibe/skills",
+   "detect": [
+    "~/.vibe"
+   ]
+  },
+  {
+   "id": "moxby",
+   "aliases": [],
+   "label": "Moxby",
+   "skills": "~/.moxby/skills",
+   "detect": [
+    "~/.moxby"
+   ]
+  },
+  {
+   "id": "mux",
+   "aliases": [],
+   "label": "Mux",
+   "skills": "~/.mux/skills",
+   "detect": [
+    "~/.mux"
+   ]
+  },
+  {
+   "id": "opencode",
+   "aliases": [],
+   "label": "OpenCode",
+   "skills": "~/.config/opencode/skills",
+   "detect": [
+    "~/.config/opencode"
+   ]
+  },
+  {
+   "id": "openhands",
+   "aliases": [],
+   "label": "OpenHands",
+   "skills": "~/.openhands/skills",
+   "detect": [
+    "~/.openhands"
+   ]
+  },
+  {
+   "id": "ona",
+   "aliases": [],
+   "label": "Ona",
+   "skills": "~/.ona/skills",
+   "detect": [
+    "~/.ona"
+   ]
+  },
+  {
+   "id": "posit-assistant",
+   "aliases": [],
+   "label": "Posit Assistant",
+   "skills": "~/.posit/assistant/skills",
+   "detect": [
+    "~/.posit"
+   ]
+  },
+  {
+   "id": "qoder",
+   "aliases": [],
+   "label": "Qoder",
+   "skills": "~/.qoder/skills",
+   "detect": [
+    "~/.qoder"
+   ]
+  },
+  {
+   "id": "qoder-cn",
+   "aliases": [],
+   "label": "Qoder CN",
+   "skills": "~/.qoder-cn/skills",
+   "detect": [
+    "~/.qoder-cn"
+   ]
+  },
+  {
+   "id": "qwen-code",
+   "aliases": [],
+   "label": "Qwen Code",
+   "skills": "~/.qwen/skills",
+   "detect": [
+    "~/.qwen"
+   ]
+  },
+  {
+   "id": "reasonix",
+   "aliases": [],
+   "label": "Reasonix",
+   "skills": "~/.reasonix/skills",
+   "detect": [
+    "~/.reasonix"
+   ]
+  },
+  {
+   "id": "rovodev",
+   "aliases": [],
+   "label": "Rovo Dev",
+   "skills": "~/.rovodev/skills",
+   "detect": [
+    "~/.rovodev"
+   ]
+  },
+  {
+   "id": "roo",
+   "aliases": [],
+   "label": "Roo Code",
+   "skills": "~/.roo/skills",
+   "detect": [
+    "~/.roo"
+   ]
+  },
+  {
+   "id": "tabnine-cli",
+   "aliases": [],
+   "label": "Tabnine CLI",
+   "skills": "~/.tabnine/agent/skills",
+   "detect": [
+    "~/.tabnine"
+   ]
+  },
+  {
+   "id": "terramind",
+   "aliases": [],
+   "label": "Terramind",
+   "skills": "~/.terramind/skills",
+   "detect": [
+    "~/.terramind"
+   ]
+  },
+  {
+   "id": "tinycloud",
+   "aliases": [],
+   "label": "Tinycloud",
+   "skills": "~/.tinycloud/skills",
+   "detect": [
+    "~/.tinycloud"
+   ]
+  },
+  {
+   "id": "trae",
+   "aliases": [],
+   "label": "Trae",
+   "skills": "~/.trae/skills",
+   "detect": [
+    "~/.trae"
+   ]
+  },
+  {
+   "id": "trae-cn",
+   "aliases": [],
+   "label": "Trae CN",
+   "skills": "~/.trae-cn/skills",
+   "detect": [
+    "~/.trae-cn"
+   ]
+  },
+  {
+   "id": "windsurf",
+   "aliases": [],
+   "label": "Windsurf",
+   "skills": "~/.codeium/windsurf/skills",
+   "detect": [
+    "~/.codeium"
+   ]
+  },
+  {
+   "id": "zcode",
+   "aliases": [],
+   "label": "ZCode",
+   "skills": "~/.zcode/skills",
+   "detect": [
+    "~/.zcode"
+   ]
+  },
+  {
+   "id": "zencoder",
+   "aliases": [
+    "zenflow"
+   ],
+   "label": "Zencoder, Zenflow",
+   "skills": "~/.zencoder/skills",
+   "detect": [
+    "~/.zencoder"
+   ]
+  },
+  {
+   "id": "neovate",
+   "aliases": [],
+   "label": "Neovate",
+   "skills": "~/.neovate/skills",
+   "detect": [
+    "~/.neovate"
+   ]
+  },
+  {
+   "id": "pochi",
+   "aliases": [],
+   "label": "Pochi",
+   "skills": "~/.pochi/skills",
+   "detect": [
+    "~/.pochi"
+   ]
+  },
+  {
+   "id": "adal",
+   "aliases": [],
+   "label": "AdaL",
+   "skills": "~/.adal/skills",
+   "detect": [
+    "~/.adal"
+   ]
+  }
+ ]
+}
